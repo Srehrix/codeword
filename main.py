@@ -3,6 +3,8 @@ import os
 import asyncio
 import telegram
 from telegram.ext import Updater, CommandHandler
+from aiohttp import web
+from plugins import web_server
 
 def shift_letters(bot, update, args):
   # Get the word and shift amount from the arguments
@@ -29,6 +31,11 @@ def shift_letters(bot, update, args):
 # Create the Updater and attach a handler for the 'shift' command
 updater = Updater(YOUR_BOT_TOKEN)
 updater.dispatcher.add_handler(CommandHandler('shift', shift_letters, pass_args=True))
+
+app = web.AppRunner(await web_server())
+        await app.setup()
+        bind_address = "0.0.0.0"
+        await web.TCPSite(app, bind_address, PORT).start()
 
 # Start the bot
 updater.start_polling()
