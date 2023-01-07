@@ -5,7 +5,19 @@ import telegram
 from telegram.ext import Updater, CommandHandler
 from aiohttp import web
 from plugins import web_server
+from config import API_HASH, APP_ID, YOUR_BOT_TOKEN, PORT
 
+class Bot(Client):
+    def __init__(self):
+        super().__init__(
+            name="Bot",
+            api_hash=API_HASH,
+            api_id=APP_ID,
+            plugins={
+                "root": "plugins"
+            },
+            bot_token=YOUR_BOT_TOKEN
+        )
 def shift_letters(bot, update, args):
   # Get the word and shift amount from the arguments
   word = args[0]
@@ -29,7 +41,7 @@ def shift_letters(bot, update, args):
   update.message.reply_text(modified_word)
 
 # Create the Updater and attach a handler for the 'shift' command
-updater = Updater(YOUR_BOT_TOKEN)
+updater = Updater(bot_token)
 updater.dispatcher.add_handler(CommandHandler('shift', shift_letters, pass_args=True))
 
 app = web.AppRunner(await web_server())
