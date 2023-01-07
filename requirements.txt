@@ -1,0 +1,6 @@
+# --- For-Bot-Working --------- #
+pyrogram
+TgCrypto
+Pyromod
+# --- For-Web-Response ------- #
+aiohttp
