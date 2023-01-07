@@ -1,3 +1,6 @@
+
+import os
+import asyncio
 import telegram
 from telegram.ext import Updater, CommandHandler
 
